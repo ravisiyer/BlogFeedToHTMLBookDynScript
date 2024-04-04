@@ -10,12 +10,13 @@
     <main id="main">
       <form id="form">
         <h2>Barebones Blogger Blog Feed to HTML Book</h2>
-        <!-- <p>
+        <p>
           <a
-            href="https://raviswdev.blogspot.com/2024/03/notes-on-bypassing-cors-in-javascript.html"
+            href="https://raviswdev.blogspot.com/2024/04/barebones-blogger-blog-feed-to-html.html"
+            target="_blank"
             >Blog post related to this program</a
           >
-        </p> -->
+        </p>
         <br />
         <div id="input-field-group">
           <p>
@@ -24,7 +25,6 @@
               https://raviswdev.blogspot.com/):</label
             >
           </p>
-          <!-- <br /> -->
           <input
             type="text"
             size="80"
@@ -43,7 +43,7 @@
             max="150"
             value="5"
           /><br />
-          <label for="search">Search string:</label><br />
+          <label for="search">Search string (case insensitive):</label><br />
           <input
             type="text"
             size="80"
@@ -54,6 +54,7 @@
           <p>
             <a
               href="https://developers.google.com/gdata/docs/2.0/reference#Queries"
+              target="_blank"
               >See parameter q in Blogger/Google reference for search format</a
             >
           </p>
@@ -66,27 +67,28 @@
             https://raviswdev.blogspot.com/feeds/posts/default/?max-results=2&alt=json-in-script&callback=handleFeed
           </p>
           <label for="full-blog-feed-url"
-            >Full blog feed URL to be sent to blog server:</label
+            >Full blog feed URI to be sent to blog server:</label
           ><br />
           <textarea
             id="full-blog-feed-url"
             name="full-blog-feed-url"
             rows="4"
-            cols="80"
+            cols="75"
           ></textarea>
           <br />
         </div>
         <input type="submit" id="show-blog-book" value="Show Blog Book" />
         <span>You may need to enable pop-up window in browser</span>
         <p>
-          <a href="howtosaveblogbook.html">How to save generated blog book?</a>
+          <a href="howtosaveblogbook.html" target="_blank"
+            >How to save generated blog book?</a
+          >
         </p>
         <p>
-          Final blog feed request sent to Blog server using dynamically added
+          Final blog feed URI sent to blog server as src of dynamically added
           script tag:
         </p>
         <p id="blog-feed-req-final"><br /><br /></p>
-        <!-- <p id="form-alert"></p> -->
         <p>Loading Status: <span id="form-alert" class="form-alert"></span></p>
       </form>
     </main>

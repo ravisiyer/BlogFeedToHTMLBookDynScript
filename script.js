@@ -14,8 +14,6 @@ let feedReqURL = "";
 let encodedFeedReqURL = "";
 
 function handleFeed({ feed }) {
-  // alert("Your query count: " + feed.entry.length);
-
   console.log("feed");
   console.log(feed);
   if (feed) {
@@ -26,20 +24,36 @@ function handleFeed({ feed }) {
       "Loading script failed! Script did not return expected feed property. handleFeed callback is aborting!";
     return;
   }
+  let bookHeaderHTML = "";
   let contentHTML = "";
+  let tableOfContentsHTML = "";
+  bookHeaderHTML += `<p><a href="howtosaveblogbook.html" target="_blank">
+    How to save generated blog book?</a></p>`;
+  bookHeaderHTML += "<h1>Blog Feed To HTML Book</h1>";
+  bookHeaderHTML += `<h2>Blog Title: ${feed.title.$t}</h2>`;
+  bookHeaderHTML += `<h2>Blog Description: ${feed.subtitle.$t}</h2>`;
 
-  contentHTML += `<p><a href="howtosaveblogbook.html">How to save generated blog book?</a></p>`;
-  contentHTML += `<h2>Posts returned by script src URL: ${encodedFeedReqURL}</h2>`;
+  if (feed.link[2].rel === "alternate") {
+    bookHeaderHTML += `<h2>Blog Address: ${feed.link[2].href}</h2>`;
+  }
+
+  const blogLastUpdatedDate = new Date(feed.updated.$t);
+  bookHeaderHTML += `<p>Blog last updated: ${blogLastUpdatedDate.toString()}</p>`;
+
+  bookHeaderHTML += `<p>Blog feed script src URI: ${encodedFeedReqURL}</p>`;
   if (feed.openSearch$totalResults.$t === "0") {
-    contentHTML += `<p>Number of posts returned: 0</p>`;
+    bookHeaderHTML += `<p>Number of posts returned: 0</p>`;
   } else if (feed.entry) {
-    contentHTML += `<p>Number of posts returned: ${feed.entry.length}</p>`;
+    tableOfContentsHTML = "<h1>Contents (Posts) Internal Links</h1>";
+    bookHeaderHTML += `<p>Number of posts returned: ${feed.entry.length}</p>`;
     const now = new Date();
-    contentHTML += `<p>Date and Time: ${now.toString()}<br/><br/><br/><hr/><hr/><hr/></p>`;
+    bookHeaderHTML += `<p>Blog book creation date & time: ${now.toString()}</p><hr/><hr/><hr/>`;
     let postURL = "";
     let postTitle = "";
     let publishedDate, updatedDate;
     for (i in feed.entry) {
+      const oneContentLinkHTML = `<a href="#entry-${i}" target="_self">${feed.entry[i].title.$t}</a><br/><br/>`;
+      tableOfContentsHTML += oneContentLinkHTML;
       if (feed.entry[i].link[4].rel === "alternate") {
         postURL = feed.entry[i].link[4].href;
         postTitle = `<a href="${postURL}">${feed.entry[i].title.$t}</a>`;
@@ -50,7 +64,8 @@ function handleFeed({ feed }) {
       publishedDate = new Date(feed.entry[i].published.$t);
       updatedDate = new Date(feed.entry[i].updated.$t);
       contentHTML +=
-        "<h1>" +
+        `<h1 id="entry-${i}">` +
+        // "<h1>" +
         postTitle +
         "</h1>" +
         "<p>Published: " +
@@ -64,6 +79,7 @@ function handleFeed({ feed }) {
         "<hr />" +
         "<hr />";
     }
+    tableOfContentsHTML += "<hr /><hr /><hr />";
     contentHTML += `<h2>***** End of Blog Book *****</h2>`;
   } else {
     contentHTML +=
@@ -82,7 +98,11 @@ function handleFeed({ feed }) {
   const newWindow = window.open("blogbook.html");
   setTimeout(function () {
     newWindow.document.body.innerHTML =
-      '<main id="main">' + contentHTML + "</main>";
+      '<main id="main">' +
+      bookHeaderHTML +
+      tableOfContentsHTML +
+      contentHTML +
+      "</main>";
   }, 1000); // Delay of 1 second works
   // }, 0); // Delay of 0 seconds does not work
 
@@ -102,7 +122,6 @@ formEl.addEventListener("submit", async (e) => {
   feedReqURL = "";
   if (fullBlogFeedURLElm.value != "") {
     feedReqURL += fullBlogFeedURLElm.value;
-    // fullBlogFeedURLElm.value + "&alt=json-in-script&callback=handleFeed";
   } else {
     feedReqURL +=
       blogProtocolHostnameElm.value +
@@ -122,21 +141,9 @@ formEl.addEventListener("submit", async (e) => {
   formAlertElm.innerHTML = "Loading script ...";
   const script = document.createElement("script");
   script.src = encodedFeedReqURL;
-  // script.crossOrigin = "anonymous"; // Causes CORS error!!!
   script.onerror = function () {
     formAlertElm.innerHTML = `Loading script failed! Check final blog feed request given above.
        One reason could be wrong Blogger blog hostname with protocol.`;
   };
-  // script.onload = function () {
-  //   formAlertElm.innerHTML = "Script got loaded successfully.";
-  // };
   document.body.appendChild(script);
-
-  // tried below code to catch Reference error when callback name is changed. it did not catch the error
-  // try {
-  //   document.body.appendChild(script);
-  // } catch (error) {
-  //   console.log(error.message);
-  //   formAlertElm.innerHTML = "Loading script failed! ... " + error.message;
-  // }
 });
