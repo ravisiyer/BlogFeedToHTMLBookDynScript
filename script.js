@@ -4,30 +4,70 @@ const blogProtocolHostnameElm = document.getElementById(
 );
 
 const numPostsElm = document.getElementById("num-posts");
-const blogFeedURLElm = document.getElementById("blog-feed-url");
+const searchElm = document.getElementById("search");
+const fullBlogFeedURLElm = document.getElementById("full-blog-feed-url");
 const formEl = document.getElementById("form");
 const showBlogBookBtn = document.getElementById("show-blog-book");
 const blogFeedReqFinalElm = document.getElementById("blog-feed-req-final");
 const formAlertElm = document.getElementById("form-alert");
 let feedReqURL = "";
+let encodedFeedReqURL = "";
 
 function handleFeed({ feed }) {
   // alert("Your query count: " + feed.entry.length);
 
   console.log("feed");
   console.log(feed);
+  if (feed) {
+    formAlertElm.innerHTML =
+      "Script got loaded successfully and handleFeed callback was invoked.";
+  } else {
+    formAlertElm.innerHTML =
+      "Loading script failed! Script did not return expected feed property. handleFeed callback is aborting!";
+    return;
+  }
   let contentHTML = "";
-  contentHTML += `<h2>Posts returned by fetch GET URL: ${feedReqURL}</h2>`;
-  const now = new Date();
-  contentHTML += `<p><br/>on ${now.toString()}<br/><br/><br/><hr/><hr/><hr/></p>`;
-  for (i in feed.entry) {
+
+  contentHTML += `<p><a href="howtosaveblogbook.html">How to save generated blog book?</a></p>`;
+  contentHTML += `<h2>Posts returned by script src URL: ${encodedFeedReqURL}</h2>`;
+  if (feed.openSearch$totalResults.$t === "0") {
+    contentHTML += `<p>Number of posts returned: 0</p>`;
+  } else if (feed.entry) {
+    contentHTML += `<p>Number of posts returned: ${feed.entry.length}</p>`;
+    const now = new Date();
+    contentHTML += `<p>Date and Time: ${now.toString()}<br/><br/><br/><hr/><hr/><hr/></p>`;
+    let postURL = "";
+    let postTitle = "";
+    let publishedDate, updatedDate;
+    for (i in feed.entry) {
+      if (feed.entry[i].link[4].rel === "alternate") {
+        postURL = feed.entry[i].link[4].href;
+        postTitle = `<a href="${postURL}">${feed.entry[i].title.$t}</a>`;
+      } else {
+        postURL = "";
+        postTitle = feed.entry[i].title.$t;
+      }
+      publishedDate = new Date(feed.entry[i].published.$t);
+      updatedDate = new Date(feed.entry[i].updated.$t);
+      contentHTML +=
+        "<h1>" +
+        postTitle +
+        "</h1>" +
+        "<p>Published: " +
+        publishedDate.toString() +
+        "</p>" +
+        "<p>Updated: " +
+        updatedDate.toString() +
+        "</p>" +
+        "<hr />" +
+        feed.entry[i].content.$t +
+        "<hr />" +
+        "<hr />";
+    }
+    contentHTML += `<h2>***** End of Blog Book *****</h2>`;
+  } else {
     contentHTML +=
-      "<h1>" +
-      feed.entry[i].title.$t +
-      "</h1>" +
-      feed.entry[i].content.$t +
-      "<hr />" +
-      "<hr />";
+      "<h2>Unexpected response from script and so cannot create blog book.</h2>";
   }
 
   // Why is below SetTimeout needed?
@@ -47,13 +87,11 @@ function handleFeed({ feed }) {
   // }, 0); // Delay of 0 seconds does not work
 
   // There is an interesting possibility of opening the blogbook window immediately after we get the data
-  // from fetch and then add to the contents of the blogbook post by post instead of doing it all at once.
+  // from script and then add to the contents of the blogbook post by post instead of doing it all at once.
   // But that is more programming work and I am not ready now to spend time on that.
-  // } catch (error) {
-  //   formAlertElm.innerHTML = error;
-  //   console.log("error");
-  //   console.log(error);
-  // }
+  // Further I don't know whether it will make a visible performance impact. If there is a delay in
+  // blogbook creation, the main reason would typically be delay in script returning (with callback being
+  // invoked with the data)
 }
 
 formEl.addEventListener("submit", async (e) => {
@@ -62,8 +100,9 @@ formEl.addEventListener("submit", async (e) => {
   let numPosts = numPostsElm.value;
   if (numPosts === "") numPosts = 1;
   feedReqURL = "";
-  if (blogFeedURLElm.value != "") {
-    feedReqURL += blogFeedURLElm.value;
+  if (fullBlogFeedURLElm.value != "") {
+    feedReqURL += fullBlogFeedURLElm.value;
+    // fullBlogFeedURLElm.value + "&alt=json-in-script&callback=handleFeed";
   } else {
     feedReqURL +=
       blogProtocolHostnameElm.value +
@@ -71,10 +110,33 @@ formEl.addEventListener("submit", async (e) => {
       "?max-results=" +
       numPosts +
       "&alt=json-in-script&callback=handleFeed";
+    if (searchElm.value != "") {
+      feedReqURL += "&q=" + searchElm.value;
+    }
   }
-  blogFeedReqFinalElm.innerHTML = feedReqURL;
+  console.log(feedReqURL);
+  encodedFeedReqURL = encodeURI(feedReqURL);
+  // }
+  blogFeedReqFinalElm.innerHTML = encodedFeedReqURL;
 
+  formAlertElm.innerHTML = "Loading script ...";
   const script = document.createElement("script");
-  script.src = feedReqURL;
+  script.src = encodedFeedReqURL;
+  // script.crossOrigin = "anonymous"; // Causes CORS error!!!
+  script.onerror = function () {
+    formAlertElm.innerHTML = `Loading script failed! Check final blog feed request given above.
+       One reason could be wrong Blogger blog hostname with protocol.`;
+  };
+  // script.onload = function () {
+  //   formAlertElm.innerHTML = "Script got loaded successfully.";
+  // };
   document.body.appendChild(script);
+
+  // tried below code to catch Reference error when callback name is changed. it did not catch the error
+  // try {
+  //   document.body.appendChild(script);
+  // } catch (error) {
+  //   console.log(error.message);
+  //   formAlertElm.innerHTML = "Loading script failed! ... " + error.message;
+  // }
 });

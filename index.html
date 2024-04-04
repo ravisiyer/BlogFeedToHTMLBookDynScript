@@ -3,44 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Barebones Blog Feed to HTML Book</title>
-    <style>
-      body {
-        padding: 20px;
-        margin: 20px;
-        max-width: 1200px;
-      }
-      main h2 {
-        word-break: break-all;
-      }
-      form,
-      form hr {
-        width: 600px;
-      }
-      form h1,
-      form h2,
-      form hr,
-      form label,
-      form button,
-      form input,
-      form textarea,
-      form p {
-        margin: 5px;
-      }
-      form span {
-        word-break: break-all;
-      }
-    </style>
+    <title>Barebones Blogger Blog Feed to HTML Book</title>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <main id="main">
       <form id="form">
-        <h2>Barebones Blog Feed to HTML Book</h2>
+        <h2>Barebones Blogger Blog Feed to HTML Book</h2>
+        <!-- <p>
+          <a
+            href="https://raviswdev.blogspot.com/2024/03/notes-on-bypassing-cors-in-javascript.html"
+            >Blog post related to this program</a
+          >
+        </p> -->
+        <br />
         <div id="input-field-group">
-          <label for="blog-protocol-hostname"
-            >Blog hostname with protocol (e.g.
-            https://raviswdev.blogspot.com/):</label
-          ><br />
+          <p>
+            <label class="label-in-para" for="blog-protocol-hostname"
+              >Blogger blog hostname with protocol (e.g.
+              https://raviswdev.blogspot.com/):</label
+            >
+          </p>
+          <!-- <br /> -->
           <input
             type="text"
             size="80"
@@ -49,41 +33,61 @@
             value="https://raviswdev.blogspot.com/"
           /><br />
           <label for="num-posts"
-            >Number of latest posts to include (1 to 100):</label
+            >Number of latest posts to include (1 to 150):</label
           ><br />
           <input
             type="number"
             id="num-posts"
             name="num-posts"
             min="1"
-            max="100"
+            max="150"
             value="5"
           /><br />
-          <p id="or">OR</p>
+          <label for="search">Search string:</label><br />
+          <input
+            type="text"
+            size="80"
+            id="search"
+            name="search"
+            value=""
+          /><br />
+          <p>
+            <a
+              href="https://developers.google.com/gdata/docs/2.0/reference#Queries"
+              >See parameter q in Blogger/Google reference for search format</a
+            >
+          </p>
+        </div>
+        <p id="or">OR</p>
+        <div id="input-field-group">
           <p>
             If below field is non-empty, above fields will be ignored. Example
             value for below field:<br />
-            https://raviswdev.blogspot.com/feeds/posts/default/?max-results=2
+            https://raviswdev.blogspot.com/feeds/posts/default/?max-results=2&alt=json-in-script&callback=handleFeed
           </p>
-          <label for="blog-feed-url"
-            >Blog feed URL to be sent to blog server without last 'alt=...'
-            part:</label
+          <label for="full-blog-feed-url"
+            >Full blog feed URL to be sent to blog server:</label
           ><br />
           <textarea
-            id="blog-feed-url"
-            name="blog-feed-url"
+            id="full-blog-feed-url"
+            name="full-blog-feed-url"
             rows="4"
             cols="80"
           ></textarea>
           <br />
         </div>
         <input type="submit" id="show-blog-book" value="Show Blog Book" />
+        <span>You may need to enable pop-up window in browser</span>
+        <p>
+          <a href="howtosaveblogbook.html">How to save generated blog book?</a>
+        </p>
         <p>
           Final blog feed request sent to Blog server using dynamically added
           script tag:
         </p>
-        <p id="blog-feed-req-final"></p>
-        <p id="form-alert"></p>
+        <p id="blog-feed-req-final"><br /><br /></p>
+        <!-- <p id="form-alert"></p> -->
+        <p>Loading Status: <span id="form-alert" class="form-alert"></span></p>
       </form>
     </main>
 
