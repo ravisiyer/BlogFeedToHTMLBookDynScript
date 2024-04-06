@@ -98,7 +98,7 @@ function handleFeed({ feed }) {
   const newWindow = window.open("blogbook.html");
   setTimeout(function () {
     newWindow.document.body.innerHTML =
-      '<main id="main">' +
+      '<main id="main" class="main-book">' +
       bookHeaderHTML +
       tableOfContentsHTML +
       contentHTML +
