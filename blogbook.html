@@ -38,29 +38,23 @@
       </p>
     </main>
     <script>
-      // Get the parent DIV, add click listener...
+      // External links should be opened in new tab/window as otherwise dynamic HTML
+      // of this tab/window will be lost.
+      // But internal links should be opened in this tab/window.
       document.body.addEventListener("click", function (e) {
-        // e.target was the clicked element
         if (e.target && e.target.nodeName == "A") {
-          // alert(document.URL);
-          // alert(e.target.href);
           const linkhref = e.target.href;
           const docURL = document.URL;
           let docURLBase = docURL;
           const hashCharIndex = docURL.indexOf("#");
-          if (hashCharIndex > 0) {
+          if (hashCharIndex === 0) {
+            console.log("Unexpected positon of # char as 0 in document URL");
+          } else if (hashCharIndex > 0) {
             docURLBase = docURL.substring(0, hashCharIndex);
           }
-          // What if hashCharIndex is 0? Not possible?
-          // alert(docURLBase);
-          if (linkhref.includes(docURLBase)) {
-            // alert("Is internal link");
-          } else {
-            // alert("Is external link");
+          if (!linkhref.includes(docURLBase)) {
             e.target.target = "_blank";
           }
-          // alert(e.target.innerText);
-          // e.target.target = "_blank";
         }
       });
     </script>
