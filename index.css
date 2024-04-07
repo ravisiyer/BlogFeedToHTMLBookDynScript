@@ -7,22 +7,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 760px;
 }
 .main-form {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 550px;
   /* min-height: 100vh;  */
 }
 .main-book {
+  /* box-sizing: border-box; */
   max-width: 1200px;
 }
 
-.main-book img {
-  width: 100%;
-  /* object-fit: cover; */
-  object-fit: contain;
-}
+/* .main-book img { */
+/* width: 100%; */
+/* width: 90%; */
+/* width: 100vw; */
+/* object-fit: cover; */
+/* object-fit: contain; */
+/* } */
 /* main {
   text-align: center;
 }
@@ -32,10 +37,10 @@ form {
 main h2 {
   word-break: break-all;
 }
-form,
+/* form,
 form hr {
   width: 600px;
-}
+} */
 form h1,
 form h2,
 form hr,

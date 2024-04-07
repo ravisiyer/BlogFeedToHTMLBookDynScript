@@ -95,7 +95,8 @@ function handleFeed({ feed }) {
   // body's innerHTML is assigned the value below. So when the new window opens it shows only the static
   // contents of blogbook.html! Having a timeout results in the body of the new document set up correctly
   // and so below code value assignment to body works as expected.
-  const newWindow = window.open("blogbook.html");
+  // const newWindow = window.open("blogbook.html");
+  const newWindow = window.open("blogbook.html", "BlogbookWin");
   setTimeout(function () {
     newWindow.document.body.innerHTML =
       '<main id="main" class="main-book">' +

@@ -48,6 +48,17 @@
           if (!linkhref.includes(docURLBase)) {
             e.target.target = "_blank";
           }
+        } else if (e.target && e.target.nodeName == "IMG") {
+          // console.log(e.target.currentSrc);
+          // let s = e.target.currentSrc;
+          // console.log(s);
+          // s += "?target=_blank";
+          // console.log(s);
+          // // Assigning to e.target.currentSrc is not changing its value!
+          // e.target.currentSrc = s;
+          // console.log(e.target.currentSrc);
+          e.preventDefault(); //this works and so we can open window in new tab
+          window.open(e.target.currentSrc); //works!
         }
       });
     </script>
