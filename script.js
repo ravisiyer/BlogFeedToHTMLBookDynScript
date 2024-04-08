@@ -27,8 +27,14 @@ function handleFeed({ feed }) {
   let bookHeaderHTML = "";
   let contentHTML = "";
   let tableOfContentsHTML = "";
-  bookHeaderHTML += `<p><a href="howtosaveblogbook.html" target="_blank">
-    How to save generated blog book?</a></p>`;
+  bookHeaderHTML +=
+    // `<p><a href="howtosaveblogbook.html" target="_blank">
+    // How to save generated blog book?</a></p>` +
+    // `<button id="save-btn" class="save-btn" style="color: white; background-color: black;"
+    `<button id="save-btn" class="save-btn" 
+    onclick="handleSaveClick()">Save Blogbook</button>` +
+    // '<hr style="height:4px;border: 4px solid black;"></hr>';
+    '<hr style="border: 2px solid black;">';
   bookHeaderHTML += "<h1>Blog Feed To HTML Book</h1>";
   bookHeaderHTML += `<h2>Blog Title: ${feed.title.$t}</h2>`;
   bookHeaderHTML += `<h2>Blog Description: ${feed.subtitle.$t}</h2>`;
@@ -113,6 +119,16 @@ function handleFeed({ feed }) {
   // Further I don't know whether it will make a visible performance impact. If there is a delay in
   // blogbook creation, the main reason would typically be delay in script returning (with callback being
   // invoked with the data)
+
+  // const bookHTML =
+  //   "<html><head></head><body>" +
+  //   '<main id="main" class="main-book">' +
+  //   bookHeaderHTML +
+  //   tableOfContentsHTML +
+  //   contentHTML +
+  //   "</main>" +
+  //   "</body></html>";
+  // writeBook(bookHTML);
 }
 
 formEl.addEventListener("submit", async (e) => {

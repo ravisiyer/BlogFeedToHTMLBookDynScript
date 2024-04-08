@@ -62,9 +62,20 @@ form textarea {
 .form-alert {
   word-break: normal;
 }
-form input[type="submit"] {
-  color: white;
+form input[type="submit"],
+.save-btn {
+  color: whitesmoke;
   background-color: black;
+  border-radius: 5px;
+}
+form input[type="submit"]:hover,
+.save-btn:hover {
+  color: black;
+  background-color: whitesmoke;
+}
+form input[type="submit"]:active,
+.save-btn:active {
+  transform: scale(0.95);
 }
 /* form #input-field-group {
   border: 2px solid;

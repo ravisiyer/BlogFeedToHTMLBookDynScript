@@ -8,11 +8,11 @@
   </head>
   <body class="blogbook">
     <main id="main" class="main-book">
-      <p>
+      <!-- <p>
         <a href="howtosaveblogbook.html" target="_blank"
           >How to save generated blog book?</a
         >
-      </p>
+      </p> -->
       <h2>Blog Book Placeholder</h2>
       <p>
         This page is used by "Barebones Blogger Blog Feed to HTML Book" page to
@@ -30,37 +30,103 @@
         not be created here and you may please close the window.
       </p>
     </main>
+    <script src="helpers.js"></script>
     <script>
+      function isExternalLink(linkhref) {
+        const docURL = document.URL;
+        let docURLBase = docURL;
+        const hashCharIndex = docURL.indexOf("#");
+        if (hashCharIndex === 0) {
+          console.log("Unexpected positon of # char as 0 in document URL");
+          // throwing an error may be too drastic. So just return true as external link
+          // will result in new tab/window without current tab/window losing dynamic contents
+          return true;
+        } else if (hashCharIndex > 0) {
+          docURLBase = docURL.substring(0, hashCharIndex);
+        }
+        if (linkhref.includes(docURLBase)) {
+          return false;
+        } else {
+          return true;
+        }
+      }
       // External links should be opened in new tab/window as otherwise dynamic HTML
       // of this tab/window will be lost.
       // But internal links should be opened in this tab/window.
       document.body.addEventListener("click", function (e) {
         if (e.target && e.target.nodeName == "A") {
-          const linkhref = e.target.href;
-          const docURL = document.URL;
-          let docURLBase = docURL;
-          const hashCharIndex = docURL.indexOf("#");
-          if (hashCharIndex === 0) {
-            console.log("Unexpected positon of # char as 0 in document URL");
-          } else if (hashCharIndex > 0) {
-            docURLBase = docURL.substring(0, hashCharIndex);
-          }
-          if (!linkhref.includes(docURLBase)) {
+          if (isExternalLink(e.target.href)) {
             e.target.target = "_blank";
           }
         } else if (e.target && e.target.nodeName == "IMG") {
-          // console.log(e.target.currentSrc);
-          // let s = e.target.currentSrc;
-          // console.log(s);
-          // s += "?target=_blank";
-          // console.log(s);
-          // // Assigning to e.target.currentSrc is not changing its value!
-          // e.target.currentSrc = s;
-          // console.log(e.target.currentSrc);
-          e.preventDefault(); //this works and so we can open window in new tab
-          window.open(e.target.currentSrc); //works!
+          if (isExternalLink(e.target.currentSrc)) {
+            e.preventDefault(); //this works and so we can open window in new tab
+            window.open(e.target.currentSrc); //works!
+            // Appending "?target=_blank" to e.target.currentSrc did not work as
+            // assigning to e.target.currentSrc is not changing its value!
+          }
         }
       });
+
+      // window.addEventListener("beforeunload", function (e) {
+      // Below confirm is blocked by browser!
+      // if (
+      //   confirm(`Refresh will result in dynamic blogbook to be discarded.
+      //  Press OK if you are sure you want to do that else press cancel.`)
+      // ) {
+      // }
+
+      // Below code works partially (requires user to do some gesture before refresh)
+      // Ref: Feature: Require user gesture for beforeunload dialogs,
+      // https://chromestatus.com/feature/5082396709879808
+      // Console log shows error when Chrome blocks the beforeunload.
+      // Perhaps it is best not to have this code.
+      //   // Cancel the event
+      // e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+      // Don't know how to change the message shown by browser to what we want.
+      // });
+
+      function handleSaveClick() {
+        let bodyInnerHTMLWithoutSaveBtn = document.body.innerHTML;
+        const firstButtonPos = document.body.innerHTML.indexOf("<button");
+        if (firstButtonPos > 0) {
+          const firsth1StartPos = document.body.innerHTML.indexOf("<h1>");
+          if (firsth1StartPos >= 0) {
+            bodyInnerHTMLWithoutSaveBtn = document.body.innerHTML.substring(
+              0,
+              firstButtonPos
+            );
+            bodyInnerHTMLWithoutSaveBtn +=
+              document.body.innerHTML.substring(firsth1StartPos);
+          }
+        }
+        const bookHTML =
+          "<html><head>" +
+          `<style> 
+          .blogbook {
+            margin-left: 20px;
+            margin-right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 760px;
+          }
+          .main-book {
+            max-width: 1200px;
+          }
+          </style>` +
+          '</head><body class="blogbook">' +
+          // document.body.innerHTML +
+          bodyInnerHTMLWithoutSaveBtn +
+          // Below split is to workaround Live Server VSCode extension tripping up and inserting its JavaScript
+          // code just after html tag thereby making handleSaveClick() an unrecognized (or something like that)
+          // function.
+          "</bo" +
+          "dy>" +
+          "</ht" +
+          "ml>";
+        writeBook(bookHTML);
+      }
     </script>
   </body>
 </html>
