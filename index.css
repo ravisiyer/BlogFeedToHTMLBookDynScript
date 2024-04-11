@@ -1,63 +1,41 @@
-/* body {
-  max-width: 1200px;
-} */
-.blogbook {
-  margin-left: 20px;
-  margin-right: 20px;
+.input-parameters {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 760px;
-}
-.main-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 550px;
-  /* min-height: 100vh;  */
-}
-.main-book {
-  /* box-sizing: border-box; */
-  max-width: 1200px;
 }
 
-/* .main-book img { */
-/* width: 100%; */
-/* width: 90%; */
-/* width: 100vw; */
-/* object-fit: cover; */
-/* object-fit: contain; */
-/* } */
-/* main {
-  text-align: center;
+.main-form {
+  width: 70%;
+  /* min-width: 550px; */
+  max-width: 590px;
 }
-form {
-  text-align: left;
-} */
-main h2 {
-  word-break: break-all;
+
+form h2 {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
-/* form,
-form hr {
-  width: 600px;
-} */
-form h1,
-form h2,
-form hr,
-form label,
+
+/* form h1,
+form p,
 form button,
+form label,
+form hr, */
 form input,
-form textarea,
-form p {
-  margin: 5px;
+form textarea {
+  margin-bottom: 5px;
 }
-form span,
+/* form span,
+form p,
 form li {
+  word-break: break-all;
+} */
+.URI {
   word-break: break-all;
 }
 form input[type="text"],
 form textarea {
-  max-width: 590px;
+  width: 100%;
+  /* max-width: 590px; */
 }
 .form-alert {
   word-break: normal;
@@ -80,6 +58,63 @@ form input[type="submit"]:active,
 /* form #input-field-group {
   border: 2px solid;
 } */
-.label-in-para {
+/* .label-in-para {
   margin: 0;
+} */
+
+.blogbook {
+  /* box-sizing: border-box; */
+  padding-left: 20px;
+  padding-right: 20px;
+  /* Margin-right gets covered by vertical scrollbar
+  Padding is a better solution
+  Ref: https://www.reddit.com/r/Frontend/comments/scafy2/why_is_the_scroll_bar_covering_my_right_margin/ */
+  /* margin-left: 20px;
+  margin-right: 20px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+.main-book {
+  /* Below min-width spec. results in clipping of left side of blog book if window (html element) width is smaller than
+  around 750px. Have not understood exactly why. I think I added min-width to handle images of that width. Need to 
+  check if images do create problem if min-width is not specified. Yes if window width is small (less than 500 px)
+  images do create a problem of clipping of left side of blog book with even image getting clipped. 
+  So text gets resized well when window is made small but images do not get resized properly by default.
+  */
+  /* min-width: 760px; */
+  max-width: 1200px;
+}
+
+.main-book img {
+  max-width: 90%;
+  /* object-fit: fill; */
+}
+
+@media screen and (max-width: 600px) {
+  .main-form {
+    width: 80%;
+    /* min-width: 450px;
+    max-width: 490px; */
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .main-form {
+    width: 90%;
+    /* min-width: 350px;
+    max-width: 390px; */
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .main-form {
+    width: 95%;
+    /* min-width: 250px;
+    max-width: 290px; */
+  }
 }

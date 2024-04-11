@@ -6,28 +6,17 @@
     <title>Barebones Blogger Blog Feed to HTML Book</title>
     <link rel="stylesheet" href="index.css" />
   </head>
-  <body>
+  <body class="input-parameters">
     <main id="main" class="main-form">
       <form id="form">
         <h2>Barebones Blogger Blog Feed to HTML Book</h2>
-        <p>
-          <a
-            href="https://raviswdev.blogspot.com/2024/04/barebones-blogger-blog-feed-to-html.html"
-            target="_blank"
-            >Blog post related to this program</a
-          >
-        </p>
-        <br />
         <div id="input-field-group">
-          <p>
-            <label class="label-in-para" for="blog-protocol-hostname"
-              >Blogger blog hostname with protocol (e.g.
-              https://raviswdev.blogspot.com/):</label
-            >
-          </p>
+          <label for="blog-protocol-hostname"
+            >Blogger blog hostname with protocol (e.g.
+            https://raviswdev.blogspot.com/):</label
+          >
           <input
             type="text"
-            size="70"
             id="blog-protocol-hostname"
             name="blog-protocol-hostname"
             value="https://raviswdev.blogspot.com/"
@@ -44,27 +33,21 @@
             value="5"
           /><br />
           <label for="search">Search string (case insensitive):</label><br />
-          <input
-            type="text"
-            size="70"
-            id="search"
-            name="search"
-            value=""
-          /><br />
-          <p>
-            <a
-              href="https://developers.google.com/gdata/docs/2.0/reference#Queries"
-              target="_blank"
-              >See parameter q in Blogger/Google reference for search format</a
-            >
-          </p>
+          <input type="text" id="search" name="search" value="" />
+          <a
+            href="https://developers.google.com/gdata/docs/2.0/reference#Queries"
+            target="_blank"
+            >See parameter q in Blogger/Google reference for search format</a
+          >
         </div>
         <p id="or">OR</p>
         <div id="input-field-group">
           <p>
             If below field is non-empty, above fields will be ignored. Example
             value for below field:<br />
-            https://raviswdev.blogspot.com/feeds/posts/default/?max-results=2&alt=json-in-script&callback=handleFeed
+            <span class="URI">
+              https://raviswdev.blogspot.com/feeds/posts/default/?max-results=2&alt=json-in-script&callback=handleFeed
+            </span>
           </p>
           <label for="full-blog-feed-url"
             >Full blog feed URI to be sent to blog server:</label
@@ -73,28 +56,28 @@
             id="full-blog-feed-url"
             name="full-blog-feed-url"
             rows="4"
-            cols="65"
           ></textarea>
           <br />
         </div>
         <input type="submit" id="show-blog-book" value="Show Blog Book" />
         <span>You may need to enable pop-up window in browser</span>
-        <!-- <p>
-          <a href="howtosaveblogbook.html" target="_blank"
-            >How to save generated blog book?</a
-          >
-        </p> -->
         <p>
           Final blog feed URI sent to blog server as src of dynamically added
-          script tag:
+          script tag:<br />
+          <span id="blog-feed-req-final" class="URI"><br /><br /></span>
         </p>
-        <p id="blog-feed-req-final"><br /><br /></p>
         <p>Loading Status: <span id="form-alert" class="form-alert"></span></p>
+        <p>
+          <a
+            href="https://raviswdev.blogspot.com/2024/04/barebones-blogger-blog-feed-to-html.html"
+            target="_blank"
+            >Blog post related to this program</a
+          >
+        </p>
       </form>
     </main>
 
     <script src="helpers.js"></script>
     <script src="script.js"></script>
-    <!-- <script src="script.mjs" type="module"></script> -->
   </body>
 </html>
