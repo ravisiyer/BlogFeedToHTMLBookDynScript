@@ -20,6 +20,3 @@ function writeBook(htmlContent) {
   // Clean up
   document.body.removeChild(link);
 }
-
-// export default writeBook;
-// module.exports = { writeBook };

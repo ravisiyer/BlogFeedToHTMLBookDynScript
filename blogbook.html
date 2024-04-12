@@ -8,11 +8,6 @@
   </head>
   <body class="blogbook">
     <main id="main" class="main-book">
-      <!-- <p>
-        <a href="howtosaveblogbook.html" target="_blank"
-          >How to save generated blog book?</a
-        >
-      </p> -->
       <h2>Blog Book Placeholder</h2>
       <p>
         This page is used by "Barebones Blogger Blog Feed to HTML Book" page to
@@ -116,11 +111,10 @@
           }
           </style>` +
           '</head><body class="blogbook">' +
-          // document.body.innerHTML +
           bodyInnerHTMLWithoutSaveBtn +
           // Below split is to workaround Live Server VSCode extension tripping up and inserting its JavaScript
-          // code just after html tag thereby making handleSaveClick() an unrecognized (or something like that)
-          // function.
+          // code just after end html tag in string literal thereby making handleSaveClick() an unrecognized
+          // (or something like that) function.
           "</bo" +
           "dy>" +
           "</ht" +

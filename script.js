@@ -10,7 +10,6 @@ const formEl = document.getElementById("form");
 const showBlogBookBtn = document.getElementById("show-blog-book");
 const blogFeedReqFinalElm = document.getElementById("blog-feed-req-final");
 const formAlertElm = document.getElementById("form-alert");
-let feedReqURL = "";
 let encodedFeedReqURL = "";
 
 function handleFeed({ feed }) {
@@ -28,12 +27,8 @@ function handleFeed({ feed }) {
   let contentHTML = "";
   let tableOfContentsHTML = "";
   bookHeaderHTML +=
-    // `<p><a href="howtosaveblogbook.html" target="_blank">
-    // How to save generated blog book?</a></p>` +
-    // `<button id="save-btn" class="save-btn" style="color: white; background-color: black;"
     `<button id="save-btn" class="save-btn" 
     onclick="handleSaveClick()">Save Blogbook</button>` +
-    // '<hr style="height:4px;border: 4px solid black;"></hr>';
     '<hr style="border: 2px solid black;">';
   bookHeaderHTML += "<h1>Blog Feed To HTML Book</h1>";
   bookHeaderHTML += `<h2>Blog Title: ${feed.title.$t}</h2>`;
@@ -58,7 +53,13 @@ function handleFeed({ feed }) {
     let postTitle = "";
     let publishedDate, updatedDate;
     for (i in feed.entry) {
-      const oneContentLinkHTML = `<a href="#entry-${i}" target="_self">${feed.entry[i].title.$t}</a><br/><br/>`;
+      const oneContentLinkHTML = `<a href="#entry-${i}" target="_self">${
+        feed.entry[i].title.$t
+      }</a>
+      <span>Published: ${feed.entry[i].published.$t.slice(
+        0,
+        10
+      )}, Updated: ${feed.entry[i].updated.$t.slice(0, 10)}</span><br/><br/>`;
       tableOfContentsHTML += oneContentLinkHTML;
       if (feed.entry[i].link[4].rel === "alternate") {
         postURL = feed.entry[i].link[4].href;
@@ -71,7 +72,6 @@ function handleFeed({ feed }) {
       updatedDate = new Date(feed.entry[i].updated.$t);
       contentHTML +=
         `<h1 id="entry-${i}">` +
-        // "<h1>" +
         postTitle +
         "</h1>" +
         "<p>Published: " +
@@ -119,16 +119,6 @@ function handleFeed({ feed }) {
   // Further I don't know whether it will make a visible performance impact. If there is a delay in
   // blogbook creation, the main reason would typically be delay in script returning (with callback being
   // invoked with the data)
-
-  // const bookHTML =
-  //   "<html><head></head><body>" +
-  //   '<main id="main" class="main-book">' +
-  //   bookHeaderHTML +
-  //   tableOfContentsHTML +
-  //   contentHTML +
-  //   "</main>" +
-  //   "</body></html>";
-  // writeBook(bookHTML);
 }
 
 formEl.addEventListener("submit", async (e) => {
@@ -136,23 +126,22 @@ formEl.addEventListener("submit", async (e) => {
   formAlertElm.innerHTML = "";
   let numPosts = numPostsElm.value;
   if (numPosts === "") numPosts = 1;
-  feedReqURL = "";
+  encodedFeedReqURL = "";
   if (fullBlogFeedURLElm.value != "") {
-    feedReqURL += fullBlogFeedURLElm.value;
+    encodedFeedReqURL += fullBlogFeedURLElm.value;
   } else {
-    feedReqURL +=
+    encodedFeedReqURL +=
       blogProtocolHostnameElm.value +
       "feeds/posts/default/" +
       "?max-results=" +
       numPosts +
       "&alt=json-in-script&callback=handleFeed";
     if (searchElm.value != "") {
-      feedReqURL += "&q=" + searchElm.value;
+      encodedFeedReqURL += "&q=" + encodeURIComponent(searchElm.value);
     }
   }
-  console.log(feedReqURL);
-  encodedFeedReqURL = encodeURI(feedReqURL);
-  // }
+  encodedFeedReqURL = encodedFeedReqURL.trimEnd();
+  console.log(encodedFeedReqURL);
   blogFeedReqFinalElm.innerHTML = encodedFeedReqURL;
 
   formAlertElm.innerHTML = "Loading script ...";
