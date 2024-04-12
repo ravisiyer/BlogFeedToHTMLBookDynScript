@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Barebones Blogger Blog Feed to HTML Book</title>
+    <title>Blogger Blog Feed to HTML Book</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body class="input-parameters">
     <main id="main" class="main-form">
       <form id="form">
-        <h2>Barebones Blogger Blog Feed to HTML Book</h2>
+        <h2>Blogger Blog Feed to HTML Book</h2>
         <div id="input-field-group">
           <label for="blog-protocol-hostname">Blog address:</label>
           <!-- size="40" -->
@@ -37,6 +37,25 @@
             target="_blank"
             >See parameter q in Blogger/Google reference for search format</a
           >
+          <br /><br />
+          <!-- <input type="checkbox" id="updated" name="updated" value="updated" />
+          <label for="updated"> Updated in last</label> -->
+          <!-- <input
+            type="radio"
+            id="published"
+            name="date-type"
+            value="published"
+          />
+          <label for="published">Published</label>
+          <input type="radio" id="updated" name="date-type" value="updated" />
+          <label for="updated">Updated</label> -->
+          <select name="date-range-type" id="date-range-type">
+            <option value="updated">Updated</option>
+            <option value="published">Published</option>
+          </select>
+          <span>in last</span>
+          <input type="number" id="days" name="days" />
+          <label for="days">days (blank or 0 to ignore)</label><br />
         </div>
         <p id="or">OR</p>
         <div id="input-field-group">

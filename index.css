@@ -32,6 +32,19 @@ form textarea {
   width: 400px;
 }
 
+/* #published,
+#updated {
+  display: inline;
+  margin-right: 2px;
+} */
+
+#num-posts {
+  width: 45px;
+}
+
+#days {
+  width: 50px;
+}
 /* form input[type="text"],
 form textarea {
   width: 100%;

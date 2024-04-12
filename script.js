@@ -5,6 +5,8 @@ const blogProtocolHostnameElm = document.getElementById(
 
 const numPostsElm = document.getElementById("num-posts");
 const searchElm = document.getElementById("search");
+const daysElm = document.getElementById("days");
+const dateRangeTypeElm = document.getElementById("date-range-type");
 const fullBlogFeedURLElm = document.getElementById("full-blog-feed-url");
 const formEl = document.getElementById("form");
 const showBlogBookBtn = document.getElementById("show-blog-book");
@@ -121,13 +123,32 @@ function handleFeed({ feed }) {
   // invoked with the data)
 }
 
+function getDateRangeQS(days, dateRangeType) {
+  // const blogLastUpdatedDate = new Date(feed.updated.$t);
+  const today = new Date();
+  let oldDate = new Date();
+  oldDate.setDate(oldDate.getDate() - days);
+  const oldDateQS = dateRangeType + "-min=" + oldDate.toISOString();
+  const todayQS = dateRangeType + "-max=" + today.toISOString();
+  const dateRangeQS = oldDateQS + "&" + todayQS;
+  return dateRangeQS;
+}
+
 formEl.addEventListener("submit", async (e) => {
   e.preventDefault();
   formAlertElm.innerHTML = "";
   let numPosts = numPostsElm.value;
   if (numPosts === "") numPosts = 0;
+  let days = daysElm.value;
+  let dateRangeQueryString = "";
+  let dateRangeType = dateRangeTypeElm.value;
+  if (days === "") {
+    days = 0;
+  } else {
+    dateRangeQueryString = getDateRangeQS(days, dateRangeType);
+  }
   encodedFeedReqURL = "";
-  if (fullBlogFeedURLElm.value != "") {
+  if (fullBlogFeedURLElm.value !== "") {
     encodedFeedReqURL += fullBlogFeedURLElm.value;
   } else {
     encodedFeedReqURL +=
@@ -135,8 +156,11 @@ formEl.addEventListener("submit", async (e) => {
     if (numPosts > 0) {
       encodedFeedReqURL += "max-results=" + numPosts + "&";
     }
-    if (searchElm.value != "") {
+    if (searchElm.value !== "") {
       encodedFeedReqURL += "q=" + encodeURIComponent(searchElm.value) + "&";
+    }
+    if (dateRangeQueryString !== "") {
+      encodedFeedReqURL += dateRangeQueryString + "&";
     }
     encodedFeedReqURL += "alt=json-in-script&callback=handleFeed";
   }
