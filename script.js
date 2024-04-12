@@ -63,7 +63,10 @@ function handleFeed({ feed }) {
         10
       )}, Updated: ${feed.entry[i].updated.$t.slice(0, 10)}</span><br/><br/>`;
       tableOfContentsHTML += oneContentLinkHTML;
-      if (feed.entry[i].link[4].rel === "alternate") {
+      if (
+        feed.entry[i].link.length > 4 &&
+        feed.entry[i].link[4].rel === "alternate"
+      ) {
         postURL = feed.entry[i].link[4].href;
         postTitle = `<a href="${postURL}">${feed.entry[i].title.$t}</a>`;
       } else {
@@ -137,6 +140,22 @@ function getDateRangeQS(days, dateRangeType) {
 formEl.addEventListener("submit", async (e) => {
   e.preventDefault();
   formAlertElm.innerHTML = "";
+  blogFeedReqFinalElm.innerHTML = "";
+  let blogAddress = blogProtocolHostnameElm.value;
+  // if (!blogAddress.startsWith("https:") && !blogAddress.startsWith("http:")
+  if (!blogAddress.includes(":") && !blogAddress.includes("//")) {
+    blogAddress = "https://" + blogAddress;
+    blogProtocolHostnameElm.value = blogAddress;
+  }
+  try {
+    new URL(blogAddress);
+  } catch (error) {
+    formAlertElm.innerHTML = `Blog address is invalid.`;
+    return;
+  }
+  if (!blogAddress.endsWith("/")) {
+    blogAddress += "/";
+  }
   let numPosts = numPostsElm.value;
   if (numPosts === "") numPosts = 0;
   let days = daysElm.value;
@@ -151,8 +170,7 @@ formEl.addEventListener("submit", async (e) => {
   if (fullBlogFeedURLElm.value !== "") {
     encodedFeedReqURL += fullBlogFeedURLElm.value;
   } else {
-    encodedFeedReqURL +=
-      blogProtocolHostnameElm.value + "feeds/posts/default/?";
+    encodedFeedReqURL += blogAddress + "feeds/posts/default/?";
     if (numPosts > 0) {
       encodedFeedReqURL += "max-results=" + numPosts + "&";
     }
@@ -173,7 +191,7 @@ formEl.addEventListener("submit", async (e) => {
   script.src = encodedFeedReqURL;
   script.onerror = function () {
     formAlertElm.innerHTML = `Loading script failed! Check final blog feed request given above.
-       One reason could be wrong Blogger blog hostname with protocol.`;
+       One reason could be wrong Blogger blog hostname with protocol (blog address).`;
   };
   document.body.appendChild(script);
 });
