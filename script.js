@@ -125,20 +125,20 @@ formEl.addEventListener("submit", async (e) => {
   e.preventDefault();
   formAlertElm.innerHTML = "";
   let numPosts = numPostsElm.value;
-  if (numPosts === "") numPosts = 1;
+  if (numPosts === "") numPosts = 0;
   encodedFeedReqURL = "";
   if (fullBlogFeedURLElm.value != "") {
     encodedFeedReqURL += fullBlogFeedURLElm.value;
   } else {
     encodedFeedReqURL +=
-      blogProtocolHostnameElm.value +
-      "feeds/posts/default/" +
-      "?max-results=" +
-      numPosts +
-      "&alt=json-in-script&callback=handleFeed";
-    if (searchElm.value != "") {
-      encodedFeedReqURL += "&q=" + encodeURIComponent(searchElm.value);
+      blogProtocolHostnameElm.value + "feeds/posts/default/?";
+    if (numPosts > 0) {
+      encodedFeedReqURL += "max-results=" + numPosts + "&";
     }
+    if (searchElm.value != "") {
+      encodedFeedReqURL += "q=" + encodeURIComponent(searchElm.value) + "&";
+    }
+    encodedFeedReqURL += "alt=json-in-script&callback=handleFeed";
   }
   encodedFeedReqURL = encodedFeedReqURL.trimEnd();
   console.log(encodedFeedReqURL);

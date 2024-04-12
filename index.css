@@ -23,10 +23,19 @@ form textarea {
   word-break: break-all;
 }
 
-form input[type="text"],
-form textarea {
+#search,
+#full-blog-feed-url {
   width: 100%;
 }
+
+#blog-protocol-hostname {
+  width: 400px;
+}
+
+/* form input[type="text"],
+form textarea {
+  width: 100%;
+} */
 
 .form-alert {
   word-break: normal;
@@ -81,6 +90,9 @@ percentage should be for each break point. */
 @media screen and (max-width: 490px) {
   .main-form {
     width: 90%;
+  }
+  #blog-protocol-hostname {
+    width: 100%;
   }
 }
 

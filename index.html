@@ -11,10 +11,8 @@
       <form id="form">
         <h2>Barebones Blogger Blog Feed to HTML Book</h2>
         <div id="input-field-group">
-          <label for="blog-protocol-hostname"
-            >Blogger blog hostname with protocol (e.g.
-            https://raviswdev.blogspot.com/):</label
-          >
+          <label for="blog-protocol-hostname">Blog address:</label>
+          <!-- size="40" -->
           <input
             type="text"
             id="blog-protocol-hostname"
@@ -22,18 +20,18 @@
             value="https://raviswdev.blogspot.com/"
           /><br />
           <label for="num-posts"
-            >Number of latest posts to include (1 to 150):</label
-          ><br />
+            >Max number of posts (1 to 150 OR 0 to use default):</label
+          >
           <input
             type="number"
             id="num-posts"
             name="num-posts"
-            min="1"
+            min="0"
             max="150"
             value="5"
           /><br />
           <label for="search">Search string (case insensitive):</label><br />
-          <input type="text" id="search" name="search" value="" />
+          <textarea id="search" name="search" rows="2"></textarea><br />
           <a
             href="https://developers.google.com/gdata/docs/2.0/reference#Queries"
             target="_blank"
