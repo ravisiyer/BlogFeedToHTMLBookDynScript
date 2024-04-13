@@ -10,9 +10,8 @@
     <main id="main" class="main-form">
       <form id="form">
         <h2>Blogger Blog Feed to HTML Book</h2>
-        <div id="input-field-group">
+        <div class="input-field-group">
           <label for="blog-protocol-hostname">Blog address:</label>
-          <!-- size="40" -->
           <input
             type="text"
             id="blog-protocol-hostname"
@@ -20,35 +19,25 @@
             value="https://raviswdev.blogspot.com/"
           /><br />
           <label for="num-posts"
-            >Max number of posts (1 to 150 OR 0 to use default):</label
+            >Max number of posts (blank or 0 to ignore):</label
           >
+          <!-- value="5" -->
           <input
             type="number"
             id="num-posts"
             name="num-posts"
             min="0"
             max="150"
-            value="5"
           /><br />
-          <label for="search">Search string (case insensitive):</label><br />
-          <textarea id="search" name="search" rows="2"></textarea><br />
+          <label for="search">Search string (case insensitive):</label>
           <a
             href="https://developers.google.com/gdata/docs/2.0/reference#Queries"
             target="_blank"
-            >See parameter q in Blogger/Google reference for search format</a
+            class="float-right"
+            >Search format</a
           >
-          <br /><br />
-          <!-- <input type="checkbox" id="updated" name="updated" value="updated" />
-          <label for="updated"> Updated in last</label> -->
-          <!-- <input
-            type="radio"
-            id="published"
-            name="date-type"
-            value="published"
-          />
-          <label for="published">Published</label>
-          <input type="radio" id="updated" name="date-type" value="updated" />
-          <label for="updated">Updated</label> -->
+          <br />
+          <textarea id="search" name="search" rows="2"></textarea><br />
           <select name="date-range-type" id="date-range-type">
             <option value="updated">Updated</option>
             <option value="published">Published</option>
@@ -57,43 +46,60 @@
           <input type="number" id="days" name="days" />
           <label for="days">days (blank or 0 to ignore)</label><br />
         </div>
-        <p id="or">OR</p>
-        <div id="input-field-group">
-          <p>
-            If below field is non-empty, above fields will be ignored. Example
-            value for below field:<br />
-            <span class="URI">
+        <p class="or">
+          OR
+          <!-- <span
+            >If below field is non-empty, above fields will be ignored.</span
+          > -->
+          <span class="float-right"
+            >If below field is non-empty, above fields will be ignored.</span
+          >
+        </p>
+        <div class="input-field-group clear-right">
+          <!-- <div> -->
+          <!-- If below field is non-empty, above fields will be ignored. -->
+          <!-- Example
+            value for below field:<br /> -->
+          <!-- <span class="URI">
               https://raviswdev.blogspot.com/feeds/posts/default/?max-results=2&alt=json-in-script&callback=handleFeed </span
-            ><br /><a
-              href="https://raviswdev.blogspot.com/2024/04/example-values-full-blog-feed-uri.html"
-              target="_blank"
-              >More examples</a
-            >
-          </p>
+            > -->
+          <!-- </div> -->
           <label for="full-blog-feed-url"
             >Full blog feed URI (encoded) to be sent to blog server:</label
-          ><br />
+          >
+          <a
+            href="https://raviswdev.blogspot.com/2024/04/example-values-full-blog-feed-uri.html"
+            target="_blank"
+            class="float-right"
+            >Examples</a
+          >
+          <!-- <br /> -->
           <textarea
             id="full-blog-feed-url"
             name="full-blog-feed-url"
             rows="4"
           ></textarea>
-          <br />
         </div>
         <input type="submit" id="show-blog-book" value="Show Blog Book" />
         <span>You may need to enable pop-up window in browser</span>
+        <p>Loading Status: <span id="form-alert" class="form-alert"></span></p>
         <p>
           Final blog feed URI sent to blog server as src of dynamically added
           script tag:<br />
           <span id="blog-feed-req-final" class="URI"><br /><br /></span>
         </p>
-        <p>Loading Status: <span id="form-alert" class="form-alert"></span></p>
         <p>
           <a
             href="https://raviswdev.blogspot.com/2024/04/barebones-blogger-blog-feed-to-html.html"
             target="_blank"
-            >Blog post related to this program</a
+            >About program</a
           >
+          <!-- <a
+            href="https://raviswdev.blogspot.com/2024/04/barebones-blogger-blog-feed-to-html.html"
+            target="_blank"
+            class="float-right vertically-center"
+            >About</a
+          > -->
         </p>
       </form>
     </main>

@@ -9,14 +9,34 @@
   max-width: 590px;
 }
 
-form h2 {
+/* form h2 {
+  display: inline-block;
+} */
+
+form h2,
+form p {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
+.input-field-group {
+  border: 1px solid;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.or {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
 form input,
 form textarea {
-  margin-bottom: 5px;
+  box-sizing: border-box;
+  /* margin-bottom: 5px; */
 }
 
 .URI {
@@ -32,26 +52,32 @@ form textarea {
   width: 400px;
 }
 
-/* #published,
-#updated {
-  display: inline;
-  margin-right: 2px;
-} */
-
 #num-posts {
   width: 45px;
+  margin-top: 5px;
 }
 
 #days {
   width: 50px;
 }
-/* form input[type="text"],
-form textarea {
-  width: 100%;
+
+.float-right {
+  float: right;
+}
+
+.clear-right {
+  clear: right;
+}
+/* .vertically-center {
+  vertical-align: middle;
 } */
 
 .form-alert {
   word-break: normal;
+}
+
+form input[type="submit"] {
+  margin-top: 5px;
 }
 
 form input[type="submit"],
@@ -98,14 +124,14 @@ percentage should be for each break point. */
   .main-form {
     width: 80%;
   }
+  #blog-protocol-hostname {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 490px) {
   .main-form {
     width: 90%;
-  }
-  #blog-protocol-hostname {
-    width: 100%;
   }
 }
 
