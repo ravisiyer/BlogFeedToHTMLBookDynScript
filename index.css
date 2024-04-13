@@ -6,12 +6,8 @@
 
 .main-form {
   width: 70%;
-  max-width: 590px;
+  max-width: 600px;
 }
-
-/* form h2 {
-  display: inline-block;
-} */
 
 form h2,
 form p {
@@ -33,10 +29,13 @@ form p {
   margin-left: 5px;
 }
 
+.or span {
+  margin-left: 20px;
+}
+
 form input,
 form textarea {
   box-sizing: border-box;
-  /* margin-bottom: 5px; */
 }
 
 .URI {
@@ -68,9 +67,6 @@ form textarea {
 .clear-right {
   clear: right;
 }
-/* .vertically-center {
-  vertical-align: middle;
-} */
 
 .form-alert {
   word-break: normal;
@@ -117,26 +113,22 @@ form input[type="submit"]:active,
   max-width: 90%;
 }
 
-/* Below main-form width specifications are little arbitrary. But as they seem to work well, I am currently
-not analyzing it and coming up with more standard breakpoints and some calculations on what the width 
-percentage should be for each break point. */
-@media screen and (max-width: 600px) {
+/* At window/screen width lesser than around 900px the form width would start reducing as its percentage width (70%) of
+window combined with form max-width (600px) limits wound start getting crossed. To avoid form width reducing in this
+case, we use media query to increase form width to 100%. Eventually when window width gets lesser than 616px (8px
+margin on left and right of body element of which form is a descendant), the form width starts reducing in tandem
+with window width. */
+@media screen and (max-width: 900px) {
   .main-form {
-    width: 80%;
-  }
-  #blog-protocol-hostname {
     width: 100%;
   }
 }
 
-@media screen and (max-width: 490px) {
-  .main-form {
-    width: 90%;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .main-form {
-    width: 95%;
+/* blog-protocol-hostname (blog address field id) width is set to 400 px. It has to be set to 100% of parent width after
+screen width reduces to around 428px (8px margin left and right for body + div border 0.8px left and right and padding
+5px left and right: 16+1.6+10=27.6). Otherwise the field outline extends beyond its container div. */
+@media screen and (max-width: 428px) {
+  #blog-protocol-hostname {
+    width: 100%;
   }
 }
