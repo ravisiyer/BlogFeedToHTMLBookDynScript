@@ -9,6 +9,19 @@
   max-width: 600px;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info {
+  background-color: black;
+  color: whitesmoke;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 form h2,
 form p {
   margin-top: 5px;
@@ -17,16 +30,11 @@ form p {
 
 .input-field-group {
   border: 1px solid;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px;
 }
 
 .or {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 5px;
+  margin: 5px;
 }
 
 .or span {
@@ -36,15 +44,6 @@ form p {
 form input,
 form textarea {
   box-sizing: border-box;
-}
-
-.URI {
-  word-break: break-all;
-}
-
-#search,
-#full-blog-feed-url {
-  width: 100%;
 }
 
 #blog-protocol-hostname {
@@ -66,6 +65,15 @@ form textarea {
 
 .clear-right {
   clear: right;
+}
+
+#search,
+#full-blog-feed-url {
+  width: 100%;
+}
+
+.URI {
+  word-break: break-all;
 }
 
 .form-alert {

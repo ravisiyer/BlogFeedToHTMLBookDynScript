@@ -127,7 +127,6 @@ function handleFeed({ feed }) {
 }
 
 function getDateRangeQS(days, dateRangeType) {
-  // const blogLastUpdatedDate = new Date(feed.updated.$t);
   const today = new Date();
   let oldDate = new Date();
   oldDate.setDate(oldDate.getDate() - days);
@@ -142,7 +141,6 @@ formEl.addEventListener("submit", async (e) => {
   formAlertElm.innerHTML = "";
   blogFeedReqFinalElm.innerHTML = "";
   let blogAddress = blogProtocolHostnameElm.value;
-  // if (!blogAddress.startsWith("https:") && !blogAddress.startsWith("http:")
   if (!blogAddress.includes(":") && !blogAddress.includes("//")) {
     blogAddress = "https://" + blogAddress;
     blogProtocolHostnameElm.value = blogAddress;
@@ -163,7 +161,8 @@ formEl.addEventListener("submit", async (e) => {
   let dateRangeType = dateRangeTypeElm.value;
   if (days === "") {
     days = 0;
-  } else {
+  }
+  if (days > 0) {
     dateRangeQueryString = getDateRangeQS(days, dateRangeType);
   }
   encodedFeedReqURL = "";
@@ -190,7 +189,7 @@ formEl.addEventListener("submit", async (e) => {
   const script = document.createElement("script");
   script.src = encodedFeedReqURL;
   script.onerror = function () {
-    formAlertElm.innerHTML = `Loading script failed! Check final blog feed request given above.
+    formAlertElm.innerHTML = `Loading script failed! Check final blog feed request given below.
        One reason could be wrong Blogger blog hostname with protocol (blog address).`;
   };
   document.body.appendChild(script);

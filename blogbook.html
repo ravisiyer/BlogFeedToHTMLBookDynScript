@@ -20,9 +20,9 @@
       </p>
       <p>
         Note that this window is supposed to be automatically opened by "Blogger
-        Blog Feed to HTML Book". If you have come to this page directly or you
-        have refreshed the page, then the blog book will not be created here and
-        you may please close the window.
+        Feed to HTML Book". If you have come to this page directly or you have
+        refreshed the page, then the blog book will not be created here and you
+        may please close the window.
       </p>
     </main>
     <script src="helpers.js"></script>
@@ -62,24 +62,6 @@
           }
         }
       });
-
-      // window.addEventListener("beforeunload", function (e) {
-      // Below confirm is blocked by browser!
-      // if (
-      //   confirm(`Refresh will result in dynamic blogbook to be discarded.
-      //  Press OK if you are sure you want to do that else press cancel.`)
-      // ) {
-      // }
-
-      // Below code works partially (requires user to do some gesture before refresh)
-      // Ref: Feature: Require user gesture for beforeunload dialogs,
-      // https://chromestatus.com/feature/5082396709879808
-      // Console log shows error when Chrome blocks the beforeunload.
-      // Perhaps it is best not to have this code.
-      //   // Cancel the event
-      // e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-      // Don't know how to change the message shown by browser to what we want.
-      // });
 
       function handleSaveClick() {
         let bodyInnerHTMLWithoutSaveBtn = document.body.innerHTML;
