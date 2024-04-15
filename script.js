@@ -13,6 +13,19 @@ const showBlogBookBtn = document.getElementById("show-blog-book");
 const blogFeedReqFinalElm = document.getElementById("blog-feed-req-final");
 const formAlertElm = document.getElementById("form-alert");
 let encodedFeedReqURL = "";
+let blogbookMainHTML = "";
+let newWindow;
+
+function updateBlogbookPage() {
+  console.log("updateBlogbookPage function called");
+  // let html = `<div style="font-size:30px">Welcome!</div>`;
+  if (newWindow.document.body) {
+    newWindow.document.body.innerHTML = blogbookMainHTML;
+    // newWindow.document.body.insertAdjacentHTML("afterbegin", html);
+  } else {
+    console.log("Blogbook window document body not defined");
+  }
+}
 
 function handleFeed({ feed }) {
   console.log("feed");
@@ -107,15 +120,25 @@ function handleFeed({ feed }) {
   // contents of blogbook.html! Having a timeout results in the body of the new document set up correctly
   // and so below code value assignment to body works as expected.
   // const newWindow = window.open("blogbook.html");
-  const newWindow = window.open("blogbook.html", "BlogbookWin");
-  setTimeout(function () {
-    newWindow.document.body.innerHTML =
-      '<main id="main" class="main-book">' +
-      bookHeaderHTML +
-      tableOfContentsHTML +
-      contentHTML +
-      "</main>";
-  }, 1000); // Delay of 1 second works
+  // const newWindow = window.open("blogbook.html", "BlogbookWin");
+  newWindow = window.open("blogbook.html", "BlogbookWin");
+
+  blogbookMainHTML =
+    '<main id="main" class="main-book">' +
+    bookHeaderHTML +
+    tableOfContentsHTML +
+    contentHTML +
+    "</main>";
+
+  // setTimeout(function () {
+
+  //   newWindow.document.body.innerHTML =
+  //     '<main id="main" class="main-book">' +
+  //     bookHeaderHTML +
+  //     tableOfContentsHTML +
+  //     contentHTML +
+  //     "</main>";
+  // }, 1000); // Delay of 1 second works
   // }, 0); // Delay of 0 seconds does not work
 
   // There is an interesting possibility of opening the blogbook window immediately after we get the data

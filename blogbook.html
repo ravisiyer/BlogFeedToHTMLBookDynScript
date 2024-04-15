@@ -6,7 +6,7 @@
     <title>Blog Feed to Book - Posts Output</title>
     <link rel="stylesheet" href="index.css" />
   </head>
-  <body class="blogbook">
+  <body onload="handleLoad()" class="blogbook">
     <main id="main" class="main-book">
       <h2>Blog Book Placeholder</h2>
       <p>
@@ -19,14 +19,27 @@
         Larger blog books may take longer to load.
       </p>
       <p>
-        Note that this window is supposed to be automatically opened by "Blogger
-        Feed to HTML Book". If you have come to this page directly or you have
-        refreshed the page, then the blog book will not be created here and you
-        may please close the window.
+        Note that this tab/window is supposed to be automatically opened by
+        "Blogger Feed to HTML Book". If you have come to this page directly then
+        the blog book will not be created here and you may please close this
+        tab/window.
       </p>
     </main>
     <script src="helpers.js"></script>
     <script>
+      function handleLoad() {
+        console.log("handleLoad() called");
+        if (window.opener) {
+          window.opener.updateBlogbookPage();
+        } else {
+          alert(
+            `You seem to have come to this page directly ` +
+              `or the main form tab/window which opened this tab/window has been` +
+              ` closed. The blog book will not be created here and you may please` +
+              ` close this tab/window.`
+          );
+        }
+      }
       function isExternalLink(linkhref) {
         const docURL = document.URL;
         let docURLBase = docURL;
