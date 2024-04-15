@@ -18,10 +18,8 @@ let newWindow;
 
 function updateBlogbookPage() {
   console.log("updateBlogbookPage function called");
-  // let html = `<div style="font-size:30px">Welcome!</div>`;
   if (newWindow.document.body) {
     newWindow.document.body.innerHTML = blogbookMainHTML;
-    // newWindow.document.body.insertAdjacentHTML("afterbegin", html);
   } else {
     console.log("Blogbook window document body not defined");
   }
@@ -110,17 +108,6 @@ function handleFeed({ feed }) {
       "<h2>Unexpected response from script and so cannot create blog book.</h2>";
   }
 
-  // Why is below SetTimeout needed?
-  // From https://developer.mozilla.org/en-US/docs/Web/API/Window/open :
-  // "Remote URLs won't load immediately. When window.open() returns, the window always contains about:blank.
-  // The actual fetching of the URL is deferred and starts after the current script block finishes executing.
-  // The window creation and the loading of the referenced resource are done asynchronously."
-  // Without SetTimeout it seems that the body of the new document is not yet setup when the
-  // body's innerHTML is assigned the value below. So when the new window opens it shows only the static
-  // contents of blogbook.html! Having a timeout results in the body of the new document set up correctly
-  // and so below code value assignment to body works as expected.
-  // const newWindow = window.open("blogbook.html");
-  // const newWindow = window.open("blogbook.html", "BlogbookWin");
   newWindow = window.open("blogbook.html", "BlogbookWin");
 
   blogbookMainHTML =
@@ -129,17 +116,6 @@ function handleFeed({ feed }) {
     tableOfContentsHTML +
     contentHTML +
     "</main>";
-
-  // setTimeout(function () {
-
-  //   newWindow.document.body.innerHTML =
-  //     '<main id="main" class="main-book">' +
-  //     bookHeaderHTML +
-  //     tableOfContentsHTML +
-  //     contentHTML +
-  //     "</main>";
-  // }, 1000); // Delay of 1 second works
-  // }, 0); // Delay of 0 seconds does not work
 
   // There is an interesting possibility of opening the blogbook window immediately after we get the data
   // from script and then add to the contents of the blogbook post by post instead of doing it all at once.
