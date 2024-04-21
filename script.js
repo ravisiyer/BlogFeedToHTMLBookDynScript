@@ -54,14 +54,21 @@ function handleFeed({ feed }) {
   const blogLastUpdatedDate = new Date(feed.updated.$t);
   bookHeaderHTML += `<p>Blog last updated: ${blogLastUpdatedDate.toString()}</p>`;
 
+  bookHeaderHTML +=
+    "<p>Blog book created by " +
+    '<a href="https://raviswdev.blogspot.com/2024/04/barebones-blogger-blog-feed-to-html.html">' +
+    "Blogger Feed to HTML Book App</a> on ";
+  const now = new Date();
+  bookHeaderHTML += `${now.toString()}</p>`;
+
   bookHeaderHTML += `<p>Blog feed script src URI: ${encodedFeedReqURL}</p>`;
+
   if (feed.openSearch$totalResults.$t === "0") {
     bookHeaderHTML += `<p>Number of posts returned: 0</p>`;
   } else if (feed.entry) {
-    tableOfContentsHTML = "<h1>Contents (Posts) Internal Links</h1>";
     bookHeaderHTML += `<p>Number of posts returned: ${feed.entry.length}</p>`;
-    const now = new Date();
-    bookHeaderHTML += `<p>Blog book creation date & time: ${now.toString()}</p><hr/><hr/><hr/>`;
+    bookHeaderHTML += `<hr/><hr/><hr/>`;
+    tableOfContentsHTML = "<h1>Contents (Posts) Internal Links</h1>";
     let postURL = "";
     let postTitle = "";
     let publishedDate, updatedDate;

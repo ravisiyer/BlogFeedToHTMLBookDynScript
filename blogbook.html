@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Feed to Book - Posts Output</title>
-    <!-- <link rel="stylesheet" href="index.css" /> -->
     <style>
       .save-btn {
         color: whitesmoke;
@@ -134,19 +133,6 @@
         const bookHTML =
           "<html><head>" +
           headInnerHTML +
-          // `<style>
-          // .blogbook {
-          //   margin-left: 20px;
-          //   margin-right: 20px;
-          //   display: flex;
-          //   justify-content: center;
-          //   align-items: center;
-          //   min-width: 760px;
-          // }
-          // .main-book {
-          //   max-width: 1200px;
-          // }
-          // </style>` +
           '</head><body class="blogbook">' +
           bodyInnerHTMLWithoutSaveBtn +
           // Below split is to workaround Live Server VSCode extension tripping up and inserting its JavaScript

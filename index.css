@@ -84,7 +84,6 @@ form input[type="submit"] {
   margin-top: 5px;
 }
 
-/* .save-btn code moved to blogbook.html as internal style(s). */
 form input[type="submit"] {
   color: whitesmoke;
   background-color: black;
@@ -99,26 +98,6 @@ form input[type="submit"]:hover {
 form input[type="submit"]:active {
   transform: scale(0.95);
 }
-
-/* Below code moved to blogbook.html as internal style(s) [within style tag in head element]
-.blogbook {
-  padding-left: 20px;
-  padding-right: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  word-wrap: break-word;
-}
-
-.main-book {
-  max-width: 1200px;
-}
-
-.main-book img {
-  max-width: 90%;
-} */
 
 /* At window/screen width lesser than around 900px the form width would start reducing as its percentage width (70%) of
 window combined with form max-width (600px) limits wound start getting crossed. To avoid form width reducing in this
