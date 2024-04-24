@@ -26,10 +26,16 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow-wrap: break-word;
         word-break: break-word;
         word-wrap: break-word;
       }
+
+      /* Moved from above class 
+        overflow-wrap: break-word;
+        overflow-wrap is an alias of word-wrap
+        Ref: https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap
+        Works in Chrome without overflow-wrap; Don't know if other browsers
+        will need it. So keeping it as a comment here. */
 
       .main-book {
         max-width: 1200px;
@@ -37,6 +43,12 @@
 
       .main-book img {
         max-width: 90%;
+      }
+
+      .main-book pre {
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
       }
     </style>
   </head>
