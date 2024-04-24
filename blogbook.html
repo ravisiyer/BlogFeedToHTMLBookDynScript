@@ -56,6 +56,15 @@
         white-space: pre-wrap;
         word-wrap: break-word;
       }
+
+      .main-book span {
+        white-space: pre-wrap !important;
+      }
+      /* Moved from above class 
+      Below declaration does not get honoured by some span elements in one blog.
+      Using !important does the trick as then all span elements in that blog seem to honour it
+      white-space: pre-wrap;
+      */
     </style>
   </head>
   <body onload="handleLoad()" class="blogbook">
@@ -84,12 +93,25 @@
         if (window.opener) {
           window.opener.updateBlogbookPage();
         } else {
-          alert(
-            `You seem to have come to this page directly ` +
-              `or the main form tab/window which opened this tab/window has been` +
-              ` closed. The blog book will not be created here and you may please` +
-              ` close this tab/window.`
-          );
+          const windowHref = window.location.href;
+          const hashCharIndex = windowHref.indexOf("#");
+          if (hashCharIndex < 0) {
+            alert(
+              `You seem to have come to this page directly ` +
+                `or the main form tab/window which opened this tab/window has been` +
+                ` closed. The blog book will not be created here and you may please` +
+                ` close this tab/window.`
+            );
+          } else {
+            alert(
+              `You seem to want to go to a section of the blogbook ` +
+                `in this new tab/window. As the blogbook is dynamically` +
+                ` generated, you can only go to the section of the` +
+                ` blogbook in the original blogbook tab/window and` +
+                ` not a new tab/window.` +
+                ` You may please close this tab/window.`
+            );
+          }
         }
       }
       function isExternalLink(linkhref) {

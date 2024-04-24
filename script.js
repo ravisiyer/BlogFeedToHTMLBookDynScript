@@ -18,10 +18,10 @@ let newWindow;
 
 function updateBlogbookPage() {
   console.log("updateBlogbookPage function called");
-  if (newWindow.document.body) {
+  if (newWindow && newWindow.document && newWindow.document.body) {
     newWindow.document.body.innerHTML = blogbookMainHTML;
   } else {
-    console.log("Blogbook window document body not defined");
+    console.log("Blogbook window / document / body not defined");
   }
 }
 
