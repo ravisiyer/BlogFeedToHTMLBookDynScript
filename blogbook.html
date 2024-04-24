@@ -24,11 +24,16 @@
         padding-left: 20px;
         padding-right: 20px;
         display: flex;
-        justify-content: center;
         align-items: center;
         word-break: break-word;
         word-wrap: break-word;
       }
+      /* Moved from above class 
+         justify-content: center; 
+         Above CSS statement results in left side clipping of content if there is horizontal overflow.
+         For more, see my post: Flex justify-content: center has horizontal scroll
+          left side cut-off or clipping issue on horizontal overflow; Workaround by using margin: auto to center,
+          https://raviswdev.blogspot.com/2024/04/flex-justify-content-center-has.html */
 
       /* Moved from above class 
         overflow-wrap: break-word;
@@ -39,6 +44,7 @@
 
       .main-book {
         max-width: 1200px;
+        margin: auto;
       }
 
       .main-book img {
