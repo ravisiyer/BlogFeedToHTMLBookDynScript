@@ -210,6 +210,16 @@ formEl.addEventListener("submit", async (e) => {
     days = 0;
   }
   if (days > 0) {
+    if (searchElm.value !== "") {
+      if (
+        !confirm(
+          "Blogger seems to ignore date range if search is specified in feed request.\n" +
+            "You have specified search as well as date range. Proceed with request (OK) or Cancel?"
+        )
+      ) {
+        return;
+      }
+    }
     dateRangeQueryString = getDateRangeQS(days, dateRangeType);
   }
   encodedFeedReqURL = "";
