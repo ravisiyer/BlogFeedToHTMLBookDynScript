@@ -16,6 +16,47 @@ let encodedFeedReqURL = "";
 let blogbookMainHTML = "";
 let newWindow;
 
+// function checkQueryString() {
+window.onload = function () {
+  const searchParams = new URLSearchParams(window.location.search);
+  for (const param of searchParams) {
+    console.log(param);
+  }
+  if (searchParams.has("blog-address")) {
+    if (blogProtocolHostnameElm) {
+      blogProtocolHostnameElm.value = searchParams.get("blog-address");
+    }
+  }
+  if (searchParams.has("max-posts")) {
+    if (numPostsElm) {
+      numPostsElm.value = searchParams.get("max-posts");
+    }
+  }
+  if (searchParams.has("search")) {
+    if (searchElm) {
+      searchElm.value = searchParams.get("search");
+    }
+  }
+  if (searchParams.has("last-days-type")) {
+    if (dateRangeTypeElm) {
+      const lastDaysType = searchParams.get("last-days-type");
+      const lcLastDaysType = lastDaysType.toLowerCase();
+      if (lcLastDaysType === "updated" || lcLastDaysType === "published") {
+        dateRangeTypeElm.value = lcLastDaysType;
+      }
+    }
+  }
+  if (searchParams.has("last-days-period")) {
+    if (daysElm) {
+      daysElm.value = searchParams.get("last-days-period");
+    }
+  }
+  if (searchParams.has("full-blog-feed-uri")) {
+    if (fullBlogFeedURLElm) {
+      fullBlogFeedURLElm.value = searchParams.get("full-blog-feed-uri");
+    }
+  }
+};
 function updateBlogbookPage() {
   console.log("updateBlogbookPage function called");
   if (newWindow && newWindow.document && newWindow.document.body) {
@@ -200,3 +241,5 @@ formEl.addEventListener("submit", async (e) => {
   };
   document.body.appendChild(script);
 });
+
+// checkQueryString();

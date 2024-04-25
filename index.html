@@ -34,8 +34,11 @@
             name="num-posts"
             min="0"
             max="150"
-            value="5"
-          /><br />
+            value="25"
+          />
+          <!-- Note that 25 is default value for max-posts in Blogger Feed requests. So I am
+            using that as default value for above field too. -->
+          <br />
           <label for="search">Search:</label>
           <a
             href="https://developers.google.com/gdata/docs/2.0/reference#Queries"
@@ -50,7 +53,7 @@
             <option value="published">Published</option>
           </select>
           <span>in last</span>
-          <input type="number" id="days" name="days" />
+          <input type="number" id="days" name="days" value="5" />
           <label for="days">days</label><br />
         </div>
         <p class="or">
