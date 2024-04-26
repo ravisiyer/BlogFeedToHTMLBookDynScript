@@ -19,7 +19,6 @@ console.log(`window.name = ${window.name}`);
 window.name = "BBIndex";
 console.log(`set window.name to ${window.name}`);
 
-// function checkQueryString() {
 window.onload = function () {
   const searchParams = new URLSearchParams(window.location.search);
   for (const param of searchParams) {
@@ -80,11 +79,6 @@ function updateBlogbookPage() {
   }
   newWindow.document.body.innerHTML = blogbookMainHTML;
   return true;
-  // if (newWindow && newWindow.document && newWindow.document.body) {
-  //   newWindow.document.body.innerHTML = blogbookMainHTML;
-  // } else {
-  //   console.log("Blogbook window / document / body not defined");
-  // }
 }
 
 function handleFeed({ feed }) {
@@ -272,5 +266,3 @@ formEl.addEventListener("submit", async (e) => {
   };
   document.body.appendChild(script);
 });
-
-// checkQueryString();

@@ -120,35 +120,6 @@
           } else {
             console.log('window.opener.name !== "BBIndex"');
           }
-          // Once in a while, on netlify, the blogbook page shows only the placeholder content
-          // On 25 Apr. 2024, it happened and I checked the console log. It gave the error:
-          // "Uncaught TypeError: window.opener.updateBlogbookPage is not a function"
-          // and provided the line below having "window.opener.updateBlogbookPage();"
-          // as the line for the error.
-          // Closing the blogbook window and trying again from the index page worked.
-          // I want to inform the user that he/she should close this window and try again.
-          // So I am adding the try-catch code below.
-          // try {
-          //   window.opener.updateBlogbookPage();
-          // } catch (error) {
-          //   console.log(
-          //     "window.opener.updateBlogbookPage(); statement threw this error:"
-          //   );
-          //   console.log(error);
-          //   console.log(
-          //     "For more info. about this error, please visit: " +
-          //       "https://raviswdev.blogspot.com/2024/04/bftb-app-rare-error-on-netlify-when.html ."
-          //   );
-          //   console.log(
-          //     "User will be shown an alert about this error and asked to close blogbook window " +
-          //       "and retry."
-          //   );
-          //   alert(
-          //     "Blog Book creation had an error. This happens rarely (on netlify). " +
-          //       "Please close this blogbook window and retry blogbook creation from the main/index page." +
-          //       " If you are a developer, you may see console log for more info."
-          //   );
-          // }
         } else {
           console.log(
             "window.opener evaluates to false (is probably undefined or null)"
@@ -156,23 +127,28 @@
         }
         const windowHref = window.location.href;
         const hashCharIndex = windowHref.indexOf("#");
+        let alertMessage;
+        const pageDirectlyOrHomeReloadedMessage =
+          `You seem to have come to this page directly or the home page tab/window ` +
+          `which opened this tab/window has been closed or reloaded. ` +
+          `The blog book will not be created here.`;
+        const internalLinkInNewWindowMessage =
+          `You seem to want to go to an internal link section of the blogbook ` +
+          `in this new tab/window. As the blogbook is dynamically generated, ` +
+          `you can go to an internal link section of the blogbook only in the ` +
+          `original blogbook tab/window and not a new tab/window.`;
+
         if (hashCharIndex < 0) {
-          alert(
-            `You seem to have come to this page directly ` +
-              `or the home page tab/window which opened this tab/window has been` +
-              ` closed or reloaded. The blog book will not be created here and you may please` +
-              ` close this tab/window.`
-          );
+          alertMessage = pageDirectlyOrHomeReloadedMessage;
         } else {
-          alert(
-            `You seem to want to go to a section of the blogbook ` +
-              `in this new tab/window. As the blogbook is dynamically` +
-              ` generated, you can only go to the section of the` +
-              ` blogbook in the original blogbook tab/window and` +
-              ` not a new tab/window.` +
-              ` You may please close this tab/window.`
-          );
+          if (window.name === "BlogbookWin") {
+            alertMessage = pageDirectlyOrHomeReloadedMessage;
+          } else {
+            alertMessage = internalLinkInNewWindowMessage;
+          }
         }
+        alertMessage += "\n\nYou may please close this tab/window.";
+        alert(alertMessage);
       }
 
       function isExternalLink(linkhref) {
