@@ -90,30 +90,91 @@
     <script>
       function handleLoad() {
         console.log("handleLoad() called");
+
+        // To get some background about the various checks below, please visit my post:
+        // BFTB App: Rare error on creating new window followed by calling JS function
+        // of window.opener to write to new window; Related test program
+        // https://raviswdev.blogspot.com/2024/04/bftb-app-rare-error-on-creating.html
+
+        console.log(`window.name = ${window.name}`);
         if (window.opener) {
-          window.opener.updateBlogbookPage();
-        } else {
-          const windowHref = window.location.href;
-          const hashCharIndex = windowHref.indexOf("#");
-          if (hashCharIndex < 0) {
-            alert(
-              `You seem to have come to this page directly ` +
-                `or the main form tab/window which opened this tab/window has been` +
-                ` closed. The blog book will not be created here and you may please` +
-                ` close this tab/window.`
-            );
+          console.log(`window.opener.name = ${window.opener.name}`);
+          if (window.opener.name === "BBIndex") {
+            if (typeof window.opener.updateBlogbookPage === "function") {
+              if (window.opener.updateBlogbookPage()) {
+                console.log(
+                  "window.opener.updateBlogbookPage() invoked and returned success (true)"
+                );
+                return;
+              } else {
+                console.log(
+                  "window.opener.updateBlogbookPage() was invoked but returned failure (false)"
+                );
+              }
+            } else {
+              console.log(
+                "window.opener.updateBlogbookPage is not a function (type). Its value is:"
+              );
+              console.log(window.opener.updateBlogbookPage);
+            }
           } else {
-            alert(
-              `You seem to want to go to a section of the blogbook ` +
-                `in this new tab/window. As the blogbook is dynamically` +
-                ` generated, you can only go to the section of the` +
-                ` blogbook in the original blogbook tab/window and` +
-                ` not a new tab/window.` +
-                ` You may please close this tab/window.`
-            );
+            console.log('window.opener.name !== "BBIndex"');
           }
+          // Once in a while, on netlify, the blogbook page shows only the placeholder content
+          // On 25 Apr. 2024, it happened and I checked the console log. It gave the error:
+          // "Uncaught TypeError: window.opener.updateBlogbookPage is not a function"
+          // and provided the line below having "window.opener.updateBlogbookPage();"
+          // as the line for the error.
+          // Closing the blogbook window and trying again from the index page worked.
+          // I want to inform the user that he/she should close this window and try again.
+          // So I am adding the try-catch code below.
+          // try {
+          //   window.opener.updateBlogbookPage();
+          // } catch (error) {
+          //   console.log(
+          //     "window.opener.updateBlogbookPage(); statement threw this error:"
+          //   );
+          //   console.log(error);
+          //   console.log(
+          //     "For more info. about this error, please visit: " +
+          //       "https://raviswdev.blogspot.com/2024/04/bftb-app-rare-error-on-netlify-when.html ."
+          //   );
+          //   console.log(
+          //     "User will be shown an alert about this error and asked to close blogbook window " +
+          //       "and retry."
+          //   );
+          //   alert(
+          //     "Blog Book creation had an error. This happens rarely (on netlify). " +
+          //       "Please close this blogbook window and retry blogbook creation from the main/index page." +
+          //       " If you are a developer, you may see console log for more info."
+          //   );
+          // }
+        } else {
+          console.log(
+            "window.opener evaluates to false (is probably undefined or null)"
+          );
+        }
+        const windowHref = window.location.href;
+        const hashCharIndex = windowHref.indexOf("#");
+        if (hashCharIndex < 0) {
+          alert(
+            `You seem to have come to this page directly ` +
+              `or the home page tab/window which opened this tab/window has been` +
+              ` closed or reloaded. The blog book will not be created here and you may please` +
+              ` close this tab/window.`
+          );
+        } else {
+          alert(
+            `You seem to want to go to a section of the blogbook ` +
+              `in this new tab/window. As the blogbook is dynamically` +
+              ` generated, you can only go to the section of the` +
+              ` blogbook in the original blogbook tab/window and` +
+              ` not a new tab/window.` +
+              ` You may please close this tab/window.`
+          );
         }
       }
+
       function isExternalLink(linkhref) {
         const docURL = document.URL;
         let docURLBase = docURL;

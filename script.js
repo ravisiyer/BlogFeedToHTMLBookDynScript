@@ -15,6 +15,9 @@ const formAlertElm = document.getElementById("form-alert");
 let encodedFeedReqURL = "";
 let blogbookMainHTML = "";
 let newWindow;
+console.log(`window.name = ${window.name}`);
+window.name = "BBIndex";
+console.log(`set window.name to ${window.name}`);
 
 // function checkQueryString() {
 window.onload = function () {
@@ -59,11 +62,29 @@ window.onload = function () {
 };
 function updateBlogbookPage() {
   console.log("updateBlogbookPage function called");
-  if (newWindow && newWindow.document && newWindow.document.body) {
-    newWindow.document.body.innerHTML = blogbookMainHTML;
-  } else {
-    console.log("Blogbook window / document / body not defined");
+  if (!newWindow) {
+    console.log("Blogbook window not defined");
+    return false;
   }
+
+  if (!newWindow.document) {
+    console.log("Blogbook window defined but its document not defined");
+    return false;
+  }
+
+  if (!newWindow.document.body) {
+    console.log(
+      "Blogbook window and its document defined but its document.body not defined"
+    );
+    return false;
+  }
+  newWindow.document.body.innerHTML = blogbookMainHTML;
+  return true;
+  // if (newWindow && newWindow.document && newWindow.document.body) {
+  //   newWindow.document.body.innerHTML = blogbookMainHTML;
+  // } else {
+  //   console.log("Blogbook window / document / body not defined");
+  // }
 }
 
 function handleFeed({ feed }) {
