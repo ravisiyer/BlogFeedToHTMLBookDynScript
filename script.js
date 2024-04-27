@@ -216,6 +216,14 @@ formEl.addEventListener("submit", async (e) => {
   if (!blogAddress.endsWith("/")) {
     blogAddress += "/";
   }
+
+  if (!navigator.onLine) {
+    const notOnlineMsg = "Not online (not connected to Internet)";
+    if (!confirm(notOnlineMsg + ".\nDo you want to proceed (OK) or Cancel?")) {
+      formAlertElm.innerHTML = notOnlineMsg;
+      return;
+    }
+  }
   let numPosts = numPostsElm.value;
   if (numPosts === "") numPosts = 0;
   let days = daysElm.value;
